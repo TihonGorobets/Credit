@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Рассчитать кредит</title>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/ico" href="calc_logo.png">
+    <link rel="stylesheet" href="main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main_text">Кредитный калькулятор</div>
+<div class="section">
+    <div class="container">
+        <div class="block">
+            <input class="block_input" id="elem_number" type="text" placeholder="Сумма кредита">
+        </div>
+        
+         <div class="block">
+            <input class="block_input" id="elem_number2" type="text" placeholder="Процентная ставка">
+        </div>
+        
+         <div class="block">
+            <input class="block_input" id="elem_number3" type="text" placeholder="Срок кредита">
+        </div> 
+    </div>
+    
+    <div class="container">
+        <div class="div_btn">
+            <button class="btn" id="butt">Рассчитать</button>
+        </div>
+    
+        <div class="text_attention_div">
+        <p class="text_attention">Калькулятор рассчитан только на аннуитетный порядок погашения</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="results_div">
+            <div class="result">
+                <p class="result_text">Ежемесячные выплаты</p>
+                <p class="result_number" id="monthly_payment">0₴</p>
+            </div>
+            
+            <div class="result margin_center">
+                <p class="result_text">Общая сумма выплат</p>
+                <p class="result_number" id="total_payout">0₴</p>
+            </div>
+            
+            <div class="result">
+                <p class="result_text">Переплата</p>
+                <p class="result_number" id="overpayment">0₴</p>
+            </div>
+        </div>
+    </div>
+    
+</div>
+    
+    <script>
+        let button = document.getElementById("butt")
+        function MyFunction(){
+            let credit_amount = document.getElementById("elem_number").value;
+            let annual_rate = document.getElementById("elem_number2").value;
+            let credit_term = document.getElementById("elem_number3").value;
+            let annual_rate_res = 12/(100*annual_rate)
+            
+            let monthly_payment1 = 1 / (1 + annual_rate_res)**credit_term
+            let monthly_payment2 = 1 - monthly_payment1
+            let monthly_payment3 = annual_rate_res / monthly_payment2
+            let monthly_payment_result = credit_amount * monthly_payment3
+            
+            let total_payout = monthly_payment_result * credit_term
+            
+            let overpayment = total_payout - credit_amount
+            
+            document.getElementById("monthly_payment").textContent = Math.round(monthly_payment_result);
+            document.getElementById("total_payout").textContent = Math.round(total_payout);
+            document.getElementById("overpayment").textContent = Math.round(overpayment);
+        }
+        button.onclick = MyFunction;
+    </script>>
+</body>
+</html>
